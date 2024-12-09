@@ -11,8 +11,8 @@ const AdminSlotCreation = () => {
   const [date, setDate] = useState(defaultDate);
   const [slots, setSlots] = useState([]);
   const [interval, setInterval] = useState(intervalOptions[1]);
-  const [startTime, setStartTime] = useState("09:00 AM");
-  const [endTime, setEndTime] = useState("08:00 PM");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const { doctor_id } = useParams();
   const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();

@@ -13,31 +13,36 @@ import Slots from "./Components/Timing/Slots";
 import Signin from "./Components/auth/Signin";
 import DashBoardMain from "./Components/DashBoardComponent/DashBoardMain";
 import HomeSection from "./Components/Home/Home";
+import PrivateRoute from "./Components/auth/private";
 
 const RouteComp = () => {
   return (
     <Routes>
       <Route path="/" element={<Signin />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="/admin" element={<HomeSection />}>
+          <Route index element={<DashBoardMain />} />
 
-      <Route path="/admin" element={<HomeSection />}>
-        <Route index element={<DashBoardMain />} />
+          <Route path="appointments" element={<Appointment />}>
+            <Route index element={<OfflineAppointment />} />
+            <Route path="onlineappointment" element={<OnlineAppointment />} />
+          </Route>
 
-        <Route path="appointments" element={<Appointment />}>
-          <Route index element={<OfflineAppointment />} />
-          <Route path="onlineappointment" element={<OnlineAppointment />} />
+          <Route path="profile" element={<ProfileSettings />}>
+            <Route index element={<BasicDetials />} />
+            <Route path="update/:id" element={<BasicDetials />} />
+          </Route>
+
+          <Route path="patients" element={<MyPatients />} />
+          <Route path="reviews" element={<AdminReview />} />
+          <Route path="availabletimimgs" element={<Slots />} />
+          <Route
+            path="availabletimimgs/updateslots/:doctor_id"
+            element={<Slots />}
+          />
+          <Route path="changepassword" element={<ChangePassword />} />
+          <Route path="logout" element={<Logout />} />
         </Route>
-
-        <Route path="profile" element={<ProfileSettings />}>
-          <Route index element={<BasicDetials />} />
-          <Route path="update/:id" element={<BasicDetials />} />
-        </Route>
-
-        <Route path="patients" element={<MyPatients />} />
-        <Route path="reviews" element={<AdminReview />} />
-        <Route path="availabletimimgs" element={<Slots />} />
-        <Route path="availabletimimgs/updateslots/:doctor_id" element={<Slots />} />
-        <Route path="changepassword" element={<ChangePassword />} />
-        <Route path="logout" element={<Logout />} />
       </Route>
     </Routes>
   );

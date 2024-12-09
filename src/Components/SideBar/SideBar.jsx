@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { FaKey, FaStethoscope, FaUserEdit } from "react-icons/fa";
 import { MdPreview } from "react-icons/md";
@@ -9,6 +9,7 @@ import { RiContactsFill } from "react-icons/ri";
 
 import Logo from ".././assets/CC_logo3.png";
 import HeaderMain from "../Header/Header";
+import { BiLogOut, BiSolidLogOut } from "react-icons/bi";
 
 const navItems = [
   { icon: LuLayoutDashboard, text: "Dashboard", path: "/admin" },
@@ -18,11 +19,18 @@ const navItems = [
   { icon: MdPreview, text: "Reviews", path: "/admin/reviews" },
   { icon: FaUserEdit, text: "Profile Settings", path: "/admin/profile" },
   { icon: FaKey, text: "Change Password", path: "/admin/changepassword" },
-  { icon: TbLogout, text: "Log Out", path: "/admin/logout" },
+  // { icon: TbLogout, text: "Log Out", path: "/admin/logout" },
 ];
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate()
+
+
+const handleLogout = () =>{
+  localStorage.clear()
+  navigate("/")
+}
 
   return (
     <div>
@@ -58,6 +66,14 @@ const Sidebar = () => {
               <span className="font-medium">{item.text}</span>
             </NavLink>
           ))}
+          <div onClick={handleLogout} className="flex items-center space-x-3 p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:shadow cursor-pointer">
+            <span>
+              <BiLogOut className="h-5 w-5 text-xl" />
+            </span>
+            <span className="font-medium">
+              Log Out
+            </span>
+          </div>
         </nav>
       </div>
     </div>

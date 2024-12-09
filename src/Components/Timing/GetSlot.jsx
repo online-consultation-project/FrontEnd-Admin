@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const GetSlot = () => {
   const authtoken = localStorage.getItem("token");
   const [slot, setSlot] = useState([]);
-  const [docId, setDocId] = useState();
+  const [docId, setDocId] = useState([]);
   const AdminId = localStorage.getItem("adminId");
 
   useEffect(() => {
@@ -36,21 +36,23 @@ const GetSlot = () => {
     }
   }, [AdminId]);
   return (
-    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      <div className="con  mb-5 w-full flex items-center justify-between px-5  border-2 border-gray-300 rounded-2xl">
+    <div>
+      <div className="mb-5 w-full flex items-center justify-between px-5  border-2 border-gray-300 rounded-2xl">
         <h2 className="text-2xl font-medium py-2 ">Schedule</h2>
-        {/* <Link to={`/admin/availabletimimgs/updateslots/${docId.doctor_id}`}>
+        <Link to={`/admin/availabletimimgs/updateslots/${docId.doctor_id}`}>
           <FaEdit className="text-xl cursor-pointer" />
-        </Link> */}
+        </Link>
       </div>
-      {slot?.map((getslot, index) => (
-        <div
-          key={index}
-          className="bg-white shadow-md rounded-lg p-3 border border-gray-300 flex justify-between items-center"
-        >
-          <span className="text-gray-700 font-medium">{getslot}</span>
-        </div>
-      ))}
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {slot?.map((getslot, index) => (
+          <div
+            key={index}
+            className="bg-white shadow-md rounded-lg p-3 border border-gray-300 flex justify-between items-center"
+          >
+            <span className="text-gray-700 font-medium">{getslot}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

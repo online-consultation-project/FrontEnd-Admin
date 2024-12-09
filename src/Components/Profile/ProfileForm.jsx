@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-
 import {
   TextField,
   Select,
@@ -30,6 +29,7 @@ const initialState = {
   experience2: "",
   location: "",
   employement: "",
+  image: null,
 };
 
 const AdminInfoForm = () => {

@@ -36,7 +36,7 @@ const BasicDetails = () => {
   }, [AdminId]);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center bg-white p-4 rounded-lg shadow-md mb-6">
         <h2 className="text-2xl font-semibold">Profile</h2>
@@ -45,7 +45,7 @@ const BasicDetails = () => {
         </Link>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+      {/* <div className="bg-white p-6 rounded-lg shadow-md mb-6">
         <div className="flex flex-wrap items-center gap-6">
           <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-lg border flex items-center justify-center overflow-hidden">
             <img
@@ -62,51 +62,63 @@ const BasicDetails = () => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+      <div className="bg-white p-6 rounded-lg flex flex-col shadow-sm shadow-slate-600 mb-6">
         <h3 className="text-2xl font-semibold mb-4">Basic Info </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div>
-            <p className="text-gray-600 font-medium">Full Name:</p>
-            <p className="text-gray-800">
-              {profileData?.firstName || "N/A"} {profileData?.lastName || ""}
-            </p>
+        <div className="flex felx-row justify-around items-start gap-5 flex-wrap">
+          <div className="w-36 h-36 sm:w-60 sm:h-60 rounded-full border-[10px] border-blue-900 overflow-hidden">
+            <img
+              src="https://purepng.com/public/uploads/large/purepng.com-doctorsdoctorsdoctors-and-nursesa-qualified-practitioner-of-medicine-aclinicianmedical-practitioner-1421526856614w2jt9.png"
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
           </div>
-          <div>
-            <p className="text-gray-600 font-medium">Email:</p>
-            <p className="text-gray-800">{profileData?.email || "N/A"}</p>
-          </div>
-          <div>
-            <p className="text-gray-600 font-medium">Phone:</p>
-            <p className="text-gray-800">{profileData?.phoneNumber || "N/A"}</p>
-          </div>
-          <div>
-            <p className="text-gray-600 font-medium">Category:</p>
-            <p className="text-gray-800">{profileData?.category || "N/A"}</p>
-          </div>
-          <div>
-            <p className="text-gray-600 font-medium">Gender:</p>
-            <p className="text-gray-800">{profileData?.gender || "N/A"}</p>
-          </div>
-          <div>
-            <p className="text-gray-600 font-medium">Experience:</p>
-            <p className="text-gray-800">
-              {profileData?.experience || "N/A"} years
-            </p>
-          </div>
-          <div>
-            <p className="text-gray-600 font-medium">Hospital:</p>
-            <p className="text-gray-800">
-              {profileData?.hospitalName || "N/A"}
-            </p>
+
+          <div className=" grid max-[410px]:grid-cols-1 max-md:grid-cols-2 grid-cols-3 gap-8 ">
+            <div className="flex flex-col gap-2">
+              <p className="text-gray-600 font-medium">Full Name:</p>
+              <p className="text-black">
+                {profileData?.firstName || "N/A"} {profileData?.lastName || ""}
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-gray-600 font-medium">Email:</p>
+              <p className="text-black">{profileData?.email || "N/A"}</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-gray-600 font-medium">Phone:</p>
+              <p className="text-black">
+                {profileData?.phoneNumber || "N/A"}
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-gray-600 font-medium">Category:</p>
+              <p className="text-black">{profileData?.category || "N/A"}</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-gray-600 font-medium">Gender:</p>
+              <p className="text-black">{profileData?.gender || "N/A"}</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-gray-600 font-medium">Experience:</p>
+              <p className="text-black">
+                {profileData?.experience || "N/A"} years
+              </p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-gray-600 font-medium">Hospital:</p>
+              <p className="text-black">
+                {profileData?.hospitalName || "N/A"}
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Admin Info Form */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="rounded-lg shadow-sm shadow-slate-600">
         <AdminInfoForm />
       </div>
     </div>
