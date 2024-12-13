@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 const GetSlot = () => {
   const authtoken = localStorage.getItem("token");
   const [slot, setSlot] = useState([]);
+  console.log("slots",slot);
+    
   const [docId, setDocId] = useState([]);
   const AdminId = localStorage.getItem("adminId");
 
@@ -24,7 +26,6 @@ const GetSlot = () => {
           const data = response.data;
 
           setDocId(data);
-
           setSlot(data.slots);
         }
       } catch (error) {

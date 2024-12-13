@@ -1,229 +1,242 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import GetSlot from "./GetSlot";
-import { FaEdit } from "react-icons/fa";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
 import { toast } from "react-toastify";
 
-const AdminSlotCreation = () => {
-  const defaultDate = new Date().toISOString().split("T")[0];
-  const intervalOptions = [30, 60]; // Time intervals in minutes
-  const [date, setDate] = useState(defaultDate);
+const urlApi = "http://localhost:7000";
+const token = localStorage.getItem("token");
+const doctorId = localStorage.getItem("adminId").toString();
+
+const SlotGenerator = () => {
+  const [startTime, setStartTime] = useState("10:00 AM");
+  const [endTime, setEndTime] = useState("05:00 PM");
+  const [interval, setInterval] = useState(30); // Default interval in minutes
   const [slots, setSlots] = useState([]);
-  const [interval, setInterval] = useState(intervalOptions[1]);
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const { doctor_id } = useParams();
-  const [editMode, setEditMode] = useState(false);
-  const navigate = useNavigate();
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [existingSlots, setExistingSlots] = useState([]);
 
-  const convertTimeToDate = (time) => {
-    const [hour, minPart] = time.split(":");
-    const [minutes, period] = minPart.split(" ");
-    let hours = parseInt(hour, 10);
-    if (period === "PM" && hours !== 12) hours += 12;
-    if (period === "AM" && hours === 12) hours = 0;
-    return new Date(2000, 0, 1, hours, parseInt(minutes, 10));
-  };
-
-  const convertDateToTime = (date) => {
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const period = hours >= 12 ? "PM" : "AM";
-    const formattedHours = hours % 12 || 12;
-    const formattedMinutes = minutes.toString().padStart(2, "0");
-    return `${formattedHours}:${formattedMinutes} ${period}`;
-  };
-
-  const generateSlots = () => {
-    const start = convertTimeToDate(startTime);
-    const end = convertTimeToDate(endTime);
-    const slotsGenerated = [];
-    let current = new Date(start);
-
-    while (current < end) {
-      const next = new Date(current.getTime() + interval * 60000);
-      if (next <= end) {
-        slotsGenerated.push(
-          `${convertDateToTime(current)} - ${convertDateToTime(next)}`
-        );
-      }
-      current = next;
-    }
-    setStartTime("");
-    setEndTime("");
-    setSlots(slotsGenerated);
-  };
-
-  //save
-
-  const handleSaveSlots = async () => {
-    const authtoken = localStorage.getItem("token");
-    const admin_id = localStorage.getItem("adminId");
-
-    try {
-      editMode
-        ? await axios
-            .put(
-              `http://localhost:7000/admin/slots/?objId=${doctor_id}`,
-              {
-                slotDate: date,
-                slots,
-              },
-              {
-                headers: {
-                  authorization: `Bearer ${authtoken}`,
-                },
-              }
-            )
-            .then((res) => {
-              toast.success(res.data.message);
-              navigate("/admin/profile");
-            })
-            .catch((err) => {
-              toast.error(err.response.data.message);
-            })
-        : await axios.post(
-            `http://localhost:7000/admin/slots`,
-            {
-              slotDate: date,
-              slots,
-              doctor_id: admin_id,
-            },
-            {
-              headers: {
-                authorization: `Bearer ${authtoken}`,
-              },
-            }
-          );
-
-      setDate(defaultDate);
-    } catch (error) {
-      console.error(error);
-      alert("Error saving slots");
-    }
-  };
-
-  const getSlotsForupdate = async (doctor_id) => {
-    const authtoken = localStorage.getItem("token");
-
-    try {
-      await axios
-        .get(
-          `http://localhost:7000/admin/getslotforupdate?doctor_id=${doctor_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authtoken}`,
-            },
-          }
-        )
-        .then((res) => {
-          setSlots(res.data);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    if (doctor_id) {
-      getSlotsForupdate(doctor_id);
+    fetchSlots();
+  }, [date]);
+
+  const fetchSlots = async () => {
+    try {
+      const response = await axios.get(
+        `${urlApi}/api/slots/${doctorId}?date=${date}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setExistingSlots(response.data.slots || []);
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        toast.error("Unauthorized. Please log in again.");
+      } else {
+        toast.error("Failed to fetch slots. Please try again later.");
+      }
     }
-  });
+  };
+
+  const handleSlots = () => {
+    if (interval <= 0 || interval > 1440) {
+      toast.error("Invalid interval. Please enter a value between 1 and 1440.");
+      return;
+    }
+
+    let start = moment(startTime, "hh:mm A");
+    let end = moment(endTime, "hh:mm A");
+
+    if (!start.isValid() || !end.isValid()) {
+      toast.error("Invalid start or end time.");
+      return;
+    }
+
+    if (end.isBefore(start)) {
+      toast.error("End time cannot be earlier than start time.");
+      return;
+    }
+
+    const generatedSlots = [];
+
+    while (start.isBefore(end)) {
+      const slotStart = start.clone();
+      start.add(interval, "minutes");
+      const slotEnd = start.clone();
+
+      if (slotEnd.isAfter(end)) break;
+
+      generatedSlots.push(
+        `${slotStart.format("hh:mm A")} - ${slotEnd.format("hh:mm A")}`
+      );
+    }
+
+    setSlots(generatedSlots);
+    toast.success("Slots generated successfully.");
+  };
+
+  const saveSlots = async () => {
+    try {
+      await axios.post(
+        `${urlApi}/api/slots`,
+        { doctorId, date, slots },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      toast.success("Slots saved successfully.");
+      fetchSlots();
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to save slots. Please try again."
+      );
+    }
+  };
+
+  const updateSlots = async () => {
+    try {
+      await axios.put(
+        `${urlApi}/api/slots/${doctorId}`,
+        { date, slots },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      toast.success("Slots updated successfully.");
+      fetchSlots();
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to update slots. Please try again."
+      );
+    }
+  };
 
   return (
-    <div className="container max-w-4xl mx-auto p-2">
-      {/* Slots Display */}
+    <div className="p-6 max-w-md mx-auto bg-white rounded-lg shadow-md">
+      <h1 className="text-xl font-bold mb-4">Manage Available Slots</h1>
 
-      <div>
-        {" "}
-        <GetSlot />
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-1">Select Date</label>
+        <input
+          type="date"
+          className="w-full border rounded px-3 py-2"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
       </div>
 
-      {/* Form Inputs */}
-      <div className="space-y-6 py-4">
-        {/* Date Input */}
-        <div>
-          <label className="block font-medium mb-2">Select Date:</label>
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-1">Start Time</label>
+        <div className="flex gap-2">
           <input
-            type="date"
-            className="w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            type="time"
+            className="w-full border rounded px-3 py-2"
+            value={moment(startTime, "hh:mm A").format("HH:mm")}
+            onChange={(e) =>
+              setStartTime(moment(e.target.value, "HH:mm").format("hh:mm A"))
+            }
           />
-        </div>
-
-        <div>
-          <label className="block font-medium mb-2">Select Interval:</label>
           <select
-            className="w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-            value={interval}
-            onChange={(e) => setInterval(parseInt(e.target.value))}
+            value={startTime.split(" ")[1]}
+            onChange={(e) =>
+              setStartTime(`${startTime.split(" ")[0]} ${e.target.value}`)
+            }
+            className="border rounded px-3 py-2"
           >
-            {intervalOptions.map((option, index) => (
-              <option key={index} value={option}>
-                {option === 60 ? "1 Hour" : "30 Minutes"}
-              </option>
-            ))}
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
           </select>
         </div>
+      </div>
 
-        <div>
-          <label className="block font-medium mb-2">Start Time:</label>
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-1">End Time</label>
+        <div className="flex gap-2">
           <input
-            type="text"
-            placeholder="e.g. 09:00 AM"
-            className="w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
+            type="time"
+            className="w-full border rounded px-3 py-2"
+            value={moment(endTime, "hh:mm A").format("HH:mm")}
+            onChange={(e) =>
+              setEndTime(moment(e.target.value, "HH:mm").format("hh:mm A"))
+            }
           />
-        </div>
-        <div>
-          <label className="block font-medium mb-2">End Time:</label>
-          <input
-            type="text"
-            placeholder="e.g. 05:00 PM"
-            className="w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-          />
-        </div>
-        <div className="mb-12">
-          <h3 className="font-medium text-lg mb-4">Generated Slots:</h3>
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {slots.map((slot, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-md rounded-lg p-3 border border-gray-300 flex justify-between items-center"
-              >
-                <span className="text-gray-700 font-medium">{slot}</span>
-                <button
-                  onClick={() => setSlots(slots.filter((_, i) => i !== index))}
-                  className="text-red-500 font-bold"
-                >
-                  &times;
-                </button>
-              </div>
-            ))}
-          </div>
+          <select
+            value={endTime.split(" ")[1]}
+            onChange={(e) =>
+              setEndTime(`${endTime.split(" ")[0]} ${e.target.value}`)
+            }
+            className="border rounded px-3 py-2"
+          >
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
         </div>
       </div>
 
-      <div className="flex justify-center mt-6 space-x-4">
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-1">
+          Interval (Minutes)
+        </label>
+        <input
+          type="number"
+          className="w-full border rounded px-3 py-2"
+          value={interval}
+          onChange={(e) => setInterval(Number(e.target.value))}
+        />
+      </div>
+
+      <button
+        className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+        onClick={handleSlots}
+      >
+        Generate Slots
+      </button>
+
+      <div className="mt-4">
+        <h2 className="text-lg font-semibold">Generated Slots</h2>
+        <ul className="list-disc ml-5">
+          {slots.map((slot, index) => (
+            <li key={index}>{slot}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="flex gap-2 mt-4">
         <button
-          onClick={generateSlots}
-          className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-600 transition"
-        >
-          Generate Slots
-        </button>
-        <button
-          onClick={handleSaveSlots}
-          className="bg-green-500 text-white px-6 py-2 rounded-lg shadow hover:bg-green-600 transition"
+          className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
+          onClick={saveSlots}
         >
           Save Slots
         </button>
+        <button
+          className="w-full bg-yellow-500 text-white py-2 rounded hover:bg-yellow-600"
+          onClick={updateSlots}
+        >
+          Update Slots
+        </button>
+      </div>
+
+      <div className="mt-4">
+        <h2 className="text-lg font-semibold">Existing Slots for {date}</h2>
+        {existingSlots.length > 0 ? (
+          <table className="w-full table-auto border-collapse border border-gray-300">
+            <thead>
+              <tr>
+                <th className="border border-gray-300 px-2 py-1">Slot</th>
+              </tr>
+            </thead>
+            <tbody>
+              {existingSlots.map((slot, index) => (
+                <tr key={index}>
+                  <td className="border border-gray-300 px-2 py-1">{slot}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No slots available for this date.</p>
+        )}
       </div>
     </div>
   );
 };
 
-export default AdminSlotCreation;
+
+export default SlotGenerator;

@@ -32,44 +32,88 @@ const initialState = {
   image: null,
 };
 
+
+const getIdByData = async (_id,setAdminData) => {
+  const authtoken = localStorage.getItem("token");
+
+
+  try {
+    await axios
+      .get(`http://localhost:7000/admin/getprofile?_id=${_id}`, {
+        headers: {
+          Authorization: `Bearer ${authtoken}`,
+        },
+      })
+      .then((res) => {
+        setAdminData(res.data);
+      
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+
+
+
 const AdminInfoForm = () => {
   const [adminData, setAdminData] = useState(initialState);
-  const [editMode, setEditMode] = useState(false);
 
-  const { id } = useParams();
+  const { _id } = useParams();
   const navigate = useNavigate();
 
+  // const handleOnChange = (e) => {
+  //   const { name, value, type, files } = e.target;
+  //   setAdminData({ ...adminData, [name]: type === "file" ? files[0] : value });
+  // };
+
+
   const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setAdminData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, files } = e.target;
+  console.log(files[0]);
+  console.log(value,name);
+  
+  
+    setAdminData((prevData) => ({
+      ...prevData,
+      [name]: type === "file" ? files[0] : value,
+      ...(type === "file" && { fileOriginalName: files[0]?.name || "" }),
+    }));
   };
+
+
+
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    const data = new FormData();
+
+    Object.keys(adminData).forEach((key) => {
+      data.append(key, adminData[key]);
+    });
+    
+console.log(data);
+
+
     const authtoken = localStorage.getItem("token");
     try {
-      editMode
-        ? await axios
-            .put(
-              `http://localhost:7000/admin/profileadd/?objId=${id}`,
-              adminData,
+          await axios
+            .put(`http://localhost:7000/admin/profileadd/?objId=${_id}`, data,
               {
-                headers: { authorization: `Bearer ${authtoken}` },
+              headers: {
+                Authorization: `Bearer ${authtoken}`,
+                "Content-Type": "multipart/form-data",
               }
-            )
+            })
             .then((res) => {
               toast.success(res.data.message);
-              navigate("/admin/profile");
-              setAdminData(initialState);
-            })
-            .catch((err) => {
-              toast.error(err.response.data.message);
-            })
-        : await axios
-            .post("http://localhost:7000/admin/profileadd", adminData)
-            .then((res) => {
-              toast.success(res.data.message);
-              setAdminData(initialState);
+              // setAdminData(initialState);
+              // navigate("/")
             })
             .catch((err) => {
               toast.error(err.response.data.message);
@@ -79,37 +123,10 @@ const AdminInfoForm = () => {
     }
   };
 
-  const getIdByData = async (id) => {
-    const authtoken = localStorage.getItem("token");
-
-
-    try {
-      await axios
-        .get(`http://localhost:7000/admin/getprofile?_id=${id}`, {
-          headers: {
-            Authorization: `Bearer ${authtoken}`,
-          },
-        })
-        .then((res) => {
-          setAdminData(res.data);
-        
-        })
-        .catch((err) => {
-          toast.error(err.response.data.message);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
-    if (id) {
-      getIdByData(id);
-      setEditMode(true);
-    } else {
-      setEditMode(false);
-    }
-  }, [id]);
+      getIdByData(_id,setAdminData);
+  },[]);
 
   return (
     <Box
@@ -258,6 +275,7 @@ const AdminInfoForm = () => {
               label="Experience1"
               name="experience1"
               value={adminData.experience1}
+
               onChange={handleOnChange}
               required
             />
@@ -302,6 +320,15 @@ const AdminInfoForm = () => {
                 <MenuItem value="PartTime">PartTime</MenuItem>
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleOnChange}
+              className="mt-4"
+            />
           </Grid>
 
           {/* Submit Button */}

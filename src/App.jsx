@@ -30,7 +30,7 @@ const RouteComp = () => {
 
           <Route path="profile" element={<ProfileSettings />}>
             <Route index element={<BasicDetials />} />
-            <Route path="update/:id" element={<BasicDetials />} />
+            <Route path="update/:_id" element={<BasicDetials />} />
           </Route>
 
           <Route path="patients" element={<MyPatients />} />
