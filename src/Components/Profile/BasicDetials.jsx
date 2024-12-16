@@ -36,7 +36,7 @@ const BasicDetails = () => {
   }, [AdminId]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-[300px]">
       {/* Header */}
       <div className="flex justify-between items-center bg-white p-4 rounded-lg shadow-md mb-6">
         <h2 className="text-2xl font-semibold">Profile</h2>
@@ -44,25 +44,6 @@ const BasicDetails = () => {
           <FaEdit className="text-2xl text-blue-500" />
         </Link>
       </div>
-
-      {/* <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-        <div className="flex flex-wrap items-center gap-6">
-          <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-lg border flex items-center justify-center overflow-hidden">
-            <img
-              src="https://purepng.com/public/uploads/large/purepng.com-doctorsdoctorsdoctors-and-nursesa-qualified-practitioner-of-medicine-aclinicianmedical-practitioner-1421526856614w2jt9.png"
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="flex flex-col items-center sm:items-start">
-            <input type="file" className="mt-3 text-sm" accept="image/*" />
-            <button className="text-red-500 mt-2 text-sm">Remove</button>
-            <p className="text-gray-500 text-xs">
-              Your image should be below 4 MB. Accepted formats: jpg, png, svg.
-            </p>
-          </div>
-        </div>
-      </div> */}
 
       <div className="bg-white p-6 rounded-lg flex flex-col shadow-sm shadow-slate-600 mb-6">
         <h3 className="text-2xl font-semibold mb-4">Basic Info </h3>
@@ -115,11 +96,6 @@ const BasicDetails = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Admin Info Form */}
-      <div className="rounded-lg shadow-sm shadow-slate-600">
-        <AdminInfoForm />
       </div>
     </div>
   );

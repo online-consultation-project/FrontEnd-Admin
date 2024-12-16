@@ -15,6 +15,7 @@ import DashBoardMain from "./Components/DashBoardComponent/DashBoardMain";
 import HomeSection from "./Components/Home/Home";
 import PrivateRoute from "./Components/auth/private";
 import ResetPassword from "./Components/auth/ForgotPassword";
+import UpdateProfile from "./Components/Profile/updateProfile";
 
 const RouteComp = () => {
   return (
@@ -32,7 +33,7 @@ const RouteComp = () => {
 
           <Route path="profile" element={<ProfileSettings />}>
             <Route index element={<BasicDetials />} />
-            <Route path="update/:_id" element={<BasicDetials />} />
+            <Route path="update/:_id" element={<UpdateProfile />} />
           </Route>
 
           <Route path="patients" element={<MyPatients />} />

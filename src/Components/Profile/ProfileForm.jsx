@@ -138,6 +138,7 @@ console.log(data);
       }}
     >
       <form onSubmit={handleOnSubmit}>
+        <h2 className="text-center mb-8 font-semibold text-2xl">Update profile</h2>
         <Grid container spacing={4}>
           {/* First Name */}
           <Grid item xs={12} sm={6}>
