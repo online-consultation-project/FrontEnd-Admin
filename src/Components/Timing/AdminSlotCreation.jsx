@@ -5,12 +5,12 @@ import { toast } from "react-toastify";
 
 const urlApi = "http://localhost:7000";
 const token = localStorage.getItem("token");
-const doctorId = localStorage.getItem("adminId").toString();
+const doctorId = localStorage.getItem("adminId")
 
 const SlotGenerator = () => {
   const [startTime, setStartTime] = useState("10:00 AM");
   const [endTime, setEndTime] = useState("05:00 PM");
-  const [interval, setInterval] = useState(30); // Default interval in minutes
+  const [interval, setInterval] = useState(30); 
   const [slots, setSlots] = useState([]);
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [existingSlots, setExistingSlots] = useState([]);
@@ -20,6 +20,7 @@ const SlotGenerator = () => {
   }, [date]);
 
   const fetchSlots = async () => {
+
     try {
       const response = await axios.get(
         `${urlApi}/api/slots/${doctorId}?date=${date}`,

@@ -75,7 +75,6 @@ const AdminInfoForm = () => {
 
   const handleOnChange = (e) => {
     const { name, value, type, files } = e.target;
-  console.log(files[0]);
   console.log(value,name);
   
   

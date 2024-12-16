@@ -22,6 +22,36 @@ const appointments = [
     phone: "1234567898",
     type: "Consult for Fever",
   },
+  {
+    id: "p2",
+    name: "Robert Miller",
+    age: 38,
+    gender: "Male",
+    date: "11 Nov 2024 10:45 AM",
+    email: "sri123@gmail.com",
+    phone: "1234567898",
+    type: "Consult for Fever",
+  },
+  {
+    id: "p2",
+    name: "Robert Miller",
+    age: 38,
+    gender: "Male",
+    date: "11 Nov 2024 10:45 AM",
+    email: "sri123@gmail.com",
+    phone: "1234567898",
+    type: "Consult for Fever",
+  },
+  {
+    id: "p2",
+    name: "Robert Miller",
+    age: 38,
+    gender: "Male",
+    date: "11 Nov 2024 10:45 AM",
+    email: "sri123@gmail.com",
+    phone: "1234567898",
+    type: "Consult for Fever",
+  },
 ];
 
 const AppointmentCard = ({ appointment }) => (
@@ -33,7 +63,7 @@ const AppointmentCard = ({ appointment }) => (
       </p>
     </div>
 
-    <div className="flex flex-col items-center bg-gray-100 p-4 rounded-md text-sm gap-2">
+    <div className="flex flex-col items-center bg-gray-200 p-4 rounded-md text-sm gap-2">
       <p className="text-gray-800 font-medium text-lg">{appointment.type}</p>
 
       <div className="flex items-center gap-2 text-gray-800">
@@ -50,12 +80,12 @@ const AppointmentCard = ({ appointment }) => (
 );
 
 const MyPatients = () => (
-  <div className="container mx-auto px-4 py-8 lg:px-8">
-    <h1 className="text-2xl font-bold mb-3 border-b-2 pb-3 py-5 border-slate-600">
+  <div className="bg-gray-200 w-full min-h-screen">
+    <h1 className="text-2xl font-bold mb-7 border-b-2 pb-3 border-slate-600">
       My Patients
     </h1>
 
-    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-6 max-[545px]:grid-cols-1 max-sm:grid-cols-2 sm:max-[900px]:grid-cols-1 sm:max-xl:grid-cols-2 xl:max-2xl:grid-cols-3 2xl:grid-cols-3">
       {appointments.map((appointment) => (
         <AppointmentCard key={appointment.id} appointment={appointment} />
       ))}

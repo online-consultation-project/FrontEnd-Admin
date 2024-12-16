@@ -21,14 +21,14 @@ const AppointmentNav = () => {
   return (
     <nav className="w-full h-auto px-5 py-4 bg-slate-50 shadow-gray-300 rounded-2xl mb-3 border border-gray-300">
 
-      <div className="flex flex-col  sm:flex-row justify-around items-center space-y-4 sm:space-y-0">
+      <div className="flex flex-col  lg:flex-row justify-around items-center gap-5">
         {navItems.map((item, index) => (
           <Link to={item.path} key={index}>
             <span
-              className={`font-bold px-7      py-3 transition-all duration-150 ${
+              className={`font-bold px-7  py-3 transition-all duration-150 ${
                 item.path === location.pathname
-                  ? `bg-gradient-to-r from-${primaryColor} to-${secondaryColor} text-${whiteColor} border-2 text-white bg-blue-600 rounded-xl`
-                  : `bg-${whiteColor} text-${blackColor} border-transparent`
+                  ? `bg-gradient-to-r from-blue-500 to-blue-900 text-white bg-blue-600 rounded-3xl`
+                  : `bg-white text-black`
               }`}
             >
               {item.name}

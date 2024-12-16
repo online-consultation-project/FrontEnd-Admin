@@ -35,8 +35,8 @@ const DashBoardMain = () => {
   const COLORS = ["#fb923c", "#f87171", "#4ade80", "#60a5fa", "#a78bfa"];
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-3 border-b-2 pb-3 py-5 border-slate-600">
+    <div className="bg-gray-200 w-full min-h-screen">
+      <h1 className="text-2xl font-bold mb-7 border-b-2 pb-3 border-slate-600">
         Admin DashBoard
       </h1>
       <div className="grid grid-cols-4 max-[540px]:grid-cols-1 max-sm:grid-cols-2 sm:max-md:grid-cols-1 md:max-lg:grid-cols-2 lg:max-xl:grid-cols-3 gap-5">
@@ -46,7 +46,7 @@ const DashBoardMain = () => {
             title: "Total Patients",
             count: 102,
             date: new Date().toISOString().split("T")[0],
-            color: "slate-600",
+            color: "blue-900",
           }}
         />
         <DashboardCard
@@ -55,7 +55,7 @@ const DashBoardMain = () => {
             title: "Total Patients",
             count: 102,
             date: new Date().toISOString().split("T")[0],
-            color: "slate-600",
+            color: "blue-900",
           }}
         />
         <DashboardCard
@@ -64,7 +64,7 @@ const DashBoardMain = () => {
             title: "Total Patients",
             count: 102,
             date: new Date().toISOString().split("T")[0],
-            color: "slate-600",
+            color: "blue-900",
           }}
         />
         <DashboardCard
@@ -73,7 +73,7 @@ const DashBoardMain = () => {
             title: "Total Patients",
             count: 102,
             date: new Date().toISOString().split("T")[0],
-            color: "slate-600",
+            color: "blue-900",
           }}
         />
       </div>

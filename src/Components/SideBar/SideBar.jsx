@@ -7,7 +7,7 @@ import { IoMdTimer } from "react-icons/io";
 import { TbLogout } from "react-icons/tb";
 import { RiContactsFill } from "react-icons/ri";
 
-import Logo from ".././assets/CC_logo3.png";
+import Logo from "../../images/CureConnect.png";
 import HeaderMain from "../Header/Header";
 import { BiLogOut, BiSolidLogOut } from "react-icons/bi";
 
@@ -19,7 +19,7 @@ const navItems = [
   { icon: MdPreview, text: "Reviews", path: "/admin/reviews" },
   { icon: FaUserEdit, text: "Profile Settings", path: "/admin/profile" },
   { icon: FaKey, text: "Change Password", path: "/admin/changepassword" },
-  // { icon: TbLogout, text: "Log Out", path: "/admin/logout" },
+  
 ];
 
 const Sidebar = () => {
@@ -38,7 +38,7 @@ const handleLogout = () =>{
         <HeaderMain />
       </div>
 
-      <div className="relative bg-white h-screen w-full border-r border-gray-200 shadow-lg flex flex-col max-sm:hidden">
+      <div className="relative bg-blue-950 h-screen w-full border-r border-gray-200 shadow-lg flex flex-col max-sm:hidden">
         {/* Logo Section */}
         <div className="p-5 border-b border-gray-200">
           <div className="flex items-center justify-center">
@@ -48,17 +48,17 @@ const handleLogout = () =>{
           </div>
         </div>
 
-        <nav className="flex flex-col p-4 gap-3">
+        <nav className="flex flex-col gap-3">
           {navItems.map((item, index) => (
             <NavLink
               key={index}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center space-x-3 p-3 rounded-lg text-gray-600 transition-all duration-200 
+                `flex items-center space-x-3 pl-6 p-3 transition-all duration-200 
                 ${
                   isActive && location.pathname === item.path
-                    ? "bg-gradient-to-r from-blue-900 to-blue-500 text-white"
-                    : "hover:bg-gray-100 hover:shadow"
+                    ? "bg-blue-500 text-white border-l-8 border-white"
+                    : "hover:bg-blue-500 hover:text-white hover:border-l-8 border-white hover:shadow text-gray-400"
                 }`
               }
             >
@@ -66,7 +66,7 @@ const handleLogout = () =>{
               <span className="font-medium">{item.text}</span>
             </NavLink>
           ))}
-          <div onClick={handleLogout} className="flex items-center space-x-3 p-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:shadow cursor-pointer">
+          <div onClick={handleLogout} className="flex items-center space-x-3 pl-5 p-3 text-gray-400 hover:bg-blue-500  hover:text-white hover:border-l-8 border-white hover:shadow cursor-pointer">
             <span>
               <BiLogOut className="h-5 w-5 text-xl" />
             </span>

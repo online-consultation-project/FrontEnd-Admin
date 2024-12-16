@@ -5,9 +5,9 @@ import { IoMdTime } from "react-icons/io";
 // AppointmentCard Component
 const AppointmentCard = ({ appointment, onAccept, onReject }) => {
   return (
-    <div className="flex flex-wrap items-start md:items-center justify-between bg-white p-4 rounded-lg shadow-md mb-4 gap-4">
+    <div className="flex flex-wrap items-start md:items-center justify-between bg-white p-4 rounded-lg shadow-md mb-4 gap-6">
       {/* Name Section */}
-      <div className="flex-1 min-w-[100px]">
+      <div className="flex-1 min-w-[90px]">
         <h4 className="font-semibold text-lg">{appointment.name}</h4>
       </div>
 
@@ -123,7 +123,7 @@ const AppointmentList = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 mb-4">
+    <div className="container mx-auto mb-4">
       {appointments.map((appointment) => (
         <AppointmentCard
           key={appointment.id}

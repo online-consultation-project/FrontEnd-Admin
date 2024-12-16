@@ -7,7 +7,7 @@ const DashboardCard = ({ props }) => {
 
   return (
     <div
-      className={`h-[120px] rounded-lg bg-white shadow-sm shadow-slate-600 flex gap-6 justify-evenly border-t-4 border-${color}  max-sm:gap-11 items-center`}
+      className={`h-[120px] rounded-lg bg-white shadow-sm shadow-slate-600 flex gap-6 justify-evenly border-r-[6px] border-${color}  max-sm:gap-11 items-center`}
     >
       <Img className={`w-12 h-12 text-blue-900`} />
       <div className={`flex flex-col justify-center gap-1 items-center`}>
