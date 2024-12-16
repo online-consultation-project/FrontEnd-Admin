@@ -112,8 +112,8 @@ console.log(data);
             })
             .then((res) => {
               toast.success(res.data.message);
-              // setAdminData(initialState);
-              // navigate("/")
+              setAdminData(initialState);
+              navigate("/admin/profile")
             })
             .catch((err) => {
               toast.error(err.response.data.message);

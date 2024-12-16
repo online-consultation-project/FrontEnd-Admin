@@ -51,7 +51,7 @@ const BasicDetails = () => {
         <div className="flex felx-row justify-around items-start gap-5 flex-wrap">
           <div className="w-36 h-36 sm:w-60 sm:h-60 rounded-full border-[10px] border-blue-900 overflow-hidden">
             <img
-              src="https://purepng.com/public/uploads/large/purepng.com-doctorsdoctorsdoctors-and-nursesa-qualified-practitioner-of-medicine-aclinicianmedical-practitioner-1421526856614w2jt9.png"
+              src={`http://localhost:7000/upload/${profileData.profileFileName}`}
               alt="Profile"
               className="w-full h-full object-cover"
             />
