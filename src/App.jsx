@@ -14,11 +14,13 @@ import Signin from "./Components/auth/Signin";
 import DashBoardMain from "./Components/DashBoardComponent/DashBoardMain";
 import HomeSection from "./Components/Home/Home";
 import PrivateRoute from "./Components/auth/private";
+import ResetPassword from "./Components/auth/ForgotPassword";
 
 const RouteComp = () => {
   return (
     <Routes>
       <Route path="/" element={<Signin />} />
+      <Route path="/forgot-password" element={<ResetPassword/>}/>
       <Route element={<PrivateRoute />}>
         <Route path="/admin" element={<HomeSection />}>
           <Route index element={<DashBoardMain />} />
