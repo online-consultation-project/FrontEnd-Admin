@@ -29,6 +29,7 @@ const initialState = {
   experience2: "",
   location: "",
   employement: "",
+  about:"",
   image: null,
 };
 
@@ -321,6 +322,19 @@ console.log(data);
               </Select>
             </FormControl>
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="About"
+              name="about"
+              multiline
+              rows={4}
+              value={adminData.about}
+              onChange={handleOnChange}
+              required
+            />
+          </Grid>
+
           <Grid item xs={12} sm={6}>
             <input
               type="file"
