@@ -58,36 +58,22 @@ const getIdByData = async (_id,setAdminData) => {
 };
 
 
-
-
-
-
 const AdminInfoForm = () => {
   const [adminData, setAdminData] = useState(initialState);
 
   const { _id } = useParams();
   const navigate = useNavigate();
 
-  // const handleOnChange = (e) => {
-  //   const { name, value, type, files } = e.target;
-  //   setAdminData({ ...adminData, [name]: type === "file" ? files[0] : value });
-  // };
-
-
-  const handleOnChange = (e) => {
+   const handleOnChange = (e) => {
     const { name, value, type, files } = e.target;
   console.log(value,name);
-  
-  
+
     setAdminData((prevData) => ({
       ...prevData,
       [name]: type === "file" ? files[0] : value,
       ...(type === "file" && { fileOriginalName: files[0]?.name || "" }),
     }));
   };
-
-
-
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
