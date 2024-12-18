@@ -1,5 +1,5 @@
 import React from "react";
-import AppointmentList from "./AppointMap";
+import AppointmentList from "./Bookedappointment";
 
 const OfflineAppointment = () => {
   return (

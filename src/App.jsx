@@ -16,6 +16,7 @@ import HomeSection from "./Components/Home/Home";
 import PrivateRoute from "./Components/auth/private";
 import ResetPassword from "./Components/auth/ForgotPassword";
 import UpdateProfile from "./Components/Profile/updateProfile";
+import AppointmentList from "./Components/Appointment/Bookedappointment";
 
 const RouteComp = () => {
   return (
@@ -26,10 +27,9 @@ const RouteComp = () => {
         <Route path="/admin" element={<HomeSection />}>
           <Route index element={<DashBoardMain />} />
 
-          <Route path="appointments" element={<Appointment />}>
-            <Route index element={<OfflineAppointment />} />
-            <Route path="onlineappointment" element={<OnlineAppointment />} />
-          </Route>
+            <Route path="appointments/:doctorId" element={<AppointmentList />} />
+            {/* <Route path="appointments/:appointmentId" element={<AppointmentList />} /> */}
+            
 
           <Route path="profile" element={<ProfileSettings />}>
             <Route index element={<BasicDetials />} />
