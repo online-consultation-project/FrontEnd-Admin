@@ -35,8 +35,9 @@ const AppointmentList = () => {
   }, [doctorId]);
 
   const handleAccept = async (id) => {
+    console.log("entering",id)
     try {
-      const res = await axios.patch(`${apiUrl}/api/appointment/statusupdate/${id}/status`, { status: "Accepted" }, {
+      const res = await axios.put(`${apiUrl}/api/appointment/statusupdate/${id}/status`, { status: "Accepted" }, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -57,7 +58,7 @@ const AppointmentList = () => {
 
   const handleReject = async (id) => {
     try {
-      const res = await axios.patch(`${apiUrl}/api/appointment/statusupdate/${id}/status`, { status: "Rejected" }, {
+      const res = await axios.put(`${apiUrl}/api/appointment/statusupdate/${id}/status`, { status: "Rejected" }, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
