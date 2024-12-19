@@ -1,14 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import {
-  blackColor,
-  primaryColor,
-  secondaryColor,
-  whiteColor,
-} from "./../ReusableComp/ColorComp";
-
-
 const navItems = [
   { name: "Offline Appointments", path: "/admin/appointments" },
   { name: "Online Appointments", path: "/admin/appointments/onlineappointment" },

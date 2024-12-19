@@ -23,7 +23,7 @@ const appointments = [
     type: "Consult for Fever",
   },
   {
-    id: "p2",
+    id: "p3",
     name: "Robert Miller",
     age: 38,
     gender: "Male",
@@ -33,7 +33,7 @@ const appointments = [
     type: "Consult for Fever",
   },
   {
-    id: "p2",
+    id: "p4",
     name: "Robert Miller",
     age: 38,
     gender: "Male",
@@ -43,7 +43,7 @@ const appointments = [
     type: "Consult for Fever",
   },
   {
-    id: "p2",
+    id: "p5",
     name: "Robert Miller",
     age: 38,
     gender: "Male",
