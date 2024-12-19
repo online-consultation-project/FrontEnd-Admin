@@ -28,6 +28,8 @@ const initialState = {
   experience1: "",
   experience2: "",
   location: "",
+  address:"",
+  consultationFee:"",
   employement: "",
   about:"",
   image: null,
@@ -58,22 +60,36 @@ const getIdByData = async (_id,setAdminData) => {
 };
 
 
+
+
+
+
 const AdminInfoForm = () => {
   const [adminData, setAdminData] = useState(initialState);
 
   const { _id } = useParams();
   const navigate = useNavigate();
 
-   const handleOnChange = (e) => {
+  // const handleOnChange = (e) => {
+  //   const { name, value, type, files } = e.target;
+  //   setAdminData({ ...adminData, [name]: type === "file" ? files[0] : value });
+  // };
+
+
+  const handleOnChange = (e) => {
     const { name, value, type, files } = e.target;
   console.log(value,name);
-
+  
+  
     setAdminData((prevData) => ({
       ...prevData,
       [name]: type === "file" ? files[0] : value,
       ...(type === "file" && { fileOriginalName: files[0]?.name || "" }),
     }));
   };
+
+
+
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -98,8 +114,8 @@ console.log(data);
             })
             .then((res) => {
               toast.success(res.data.message);
-              setAdminData(initialState);
-              navigate("/admin/profile")
+              // setAdminData(initialState);
+              // navigate("/")
             })
             .catch((err) => {
               toast.error(err.response.data.message);
@@ -288,6 +304,28 @@ console.log(data);
               label="Location"
               name="location"
               value={adminData.location}
+              onChange={handleOnChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              type="text"
+              label="Detailed Address"
+              name="address"
+              value={adminData.address}
+              onChange={handleOnChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              type="number"
+              label="Consultation Fee"
+              name="consultationFee"
+              value={adminData.consultationFee}
               onChange={handleOnChange}
               required
             />
