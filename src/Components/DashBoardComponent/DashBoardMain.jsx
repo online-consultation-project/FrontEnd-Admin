@@ -78,7 +78,7 @@ const DashBoardMain = () => {
         />
       </div>
 
-      <div className="mt-8 grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <div className="mt-8 grid grid-cols-1 xl:grid-cols-2 gap-6 z-10">
         <div className="bg-white w-full h-[500px] max-sm:h-[350px] pb-16 rounded-lg p-6 max-sm:px-1 shadow-sm shadow-slate-600">
           <h2 className="text-lg font-bold text-gray-800 mb-4">
             Monthly Revenue
@@ -119,7 +119,7 @@ const DashBoardMain = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white w-full h-[500px] max-sm:h-[350px] pb-16 rounded-lg p-6 max-sm:px-1 shadow-sm shadow-slate-600">
+        <div className="bg-white w-full h-[500px] max-sm:h-[350px] pb-16 rounded-lg p-6 max-sm:px-1 shadow-sm shadow-slate-600 z-10">
           <h2 className="text-lg font-bold text-gray-800 mb-4">Daily Users</h2>
           <ResponsiveContainer>
             <PieChart>
