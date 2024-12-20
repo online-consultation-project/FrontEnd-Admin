@@ -30,11 +30,7 @@ const SlotGenerator = () => {
       );
       setExistingSlots(response.data.slots || []);
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        toast.error("Unauthorized. Please log in again.");
-      } else {
-        toast.error("Failed to fetch slots. Please try again later.");
-      }
+      console.log(error);
     }
   };
 
