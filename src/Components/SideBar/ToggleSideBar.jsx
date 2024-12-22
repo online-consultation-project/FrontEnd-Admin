@@ -24,9 +24,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         isOpen ? "translate-x-0" : "-translate-x-full"
       } transition-transform duration-300`}
     >
-      {/* Logo Section */}
-
-      {/* Close Button */}
+     
       <div className="flex justify-end px-4 pt-4">
         <button
           onClick={toggleSidebar}
@@ -39,7 +37,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         <img src={Logo} alt="Logo" className="h-14 w-auto" />
       </div>
 
-      {/* Navigation Items */}
       <div className="flex flex-col gap-4 pt-4 ">
         {navItems.map((item, index) => (
           <Link
