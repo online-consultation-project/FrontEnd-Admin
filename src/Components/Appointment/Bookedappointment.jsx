@@ -216,6 +216,7 @@ const AppointmentList = () => {
               phone: appointment.patientPhone,
               type: appointment.slot,
               status: appointment.status,
+              patientConsult:appointment.patientConsult,
               gender: appointment.patientGender,
               age: appointment.patientAge,
             }}

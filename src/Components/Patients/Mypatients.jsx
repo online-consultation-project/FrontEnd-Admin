@@ -1,58 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios"; // Import axios
 import { MdOutlineDateRange } from "react-icons/md";
+import { useParams } from "react-router-dom";
 
-const appointments = [
-  {
-    id: "p1",
-    name: "Catherine Gracey",
-    age: 36,
-    gender: "Female",
-    date: "11 Nov 2024 10:45 AM",
-    email: "sri123@gmail.com",
-    phone: "1234567898",
-    type: "Consult for Fever",
-  },
-  {
-    id: "p2",
-    name: "Robert Miller",
-    age: 38,
-    gender: "Male",
-    date: "11 Nov 2024 10:45 AM",
-    email: "sri123@gmail.com",
-    phone: "1234567898",
-    type: "Consult for Fever",
-  },
-  {
-    id: "p3",
-    name: "Robert Miller",
-    age: 38,
-    gender: "Male",
-    date: "11 Nov 2024 10:45 AM",
-    email: "sri123@gmail.com",
-    phone: "1234567898",
-    type: "Consult for Fever",
-  },
-  {
-    id: "p4",
-    name: "Robert Miller",
-    age: 38,
-    gender: "Male",
-    date: "11 Nov 2024 10:45 AM",
-    email: "sri123@gmail.com",
-    phone: "1234567898",
-    type: "Consult for Fever",
-  },
-  {
-    id: "p5",
-    name: "Robert Miller",
-    age: 38,
-    gender: "Male",
-    date: "11 Nov 2024 10:45 AM",
-    email: "sri123@gmail.com",
-    phone: "1234567898",
-    type: "Consult for Fever",
-  },
-];
+const MyPatients = () => {
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+ 
+  const {doctorId} = useParams();
+ 
+  const authToken = localStorage.getItem("token");
+ 
+  
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:7000/api/appointment/acceptbookings?doctorId=${doctorId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+        setAppointments(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Error fetching appointments");
+        setLoading(false);
+      }
+    };
+
+    fetchAppointments();
+  }, []);
+
+  if (loading) {
+    return <div>Loading appointments...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
+
+  return (
+    <div className="bg-gray-200 w-full min-h-screen">
+      <h1 className="text-2xl font-bold mb-7 border-b-2 pb-3 border-slate-600">
+        My Patients
+      </h1>
+
+      <div className="grid gap-6 max-[545px]:grid-cols-1 max-sm:grid-cols-2 sm:max-[900px]:grid-cols-1 sm:max-xl:grid-cols-2 xl:max-2xl:grid-cols-3 2xl:grid-cols-3">
+        {appointments.map((appointment) => (
+          <AppointmentCard key={appointment.id} appointment={appointment} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const AppointmentCard = ({ appointment }) => (
   <div className="bg-white shadow-md rounded-lg p-6 flex flex-col gap-4">
@@ -75,20 +79,6 @@ const AppointmentCard = ({ appointment }) => (
         <p className="break-words">{appointment.email}</p>
         <p>{appointment.phone}</p>
       </div>
-    </div>
-  </div>
-);
-
-const MyPatients = () => (
-  <div className="bg-gray-200 w-full min-h-screen">
-    <h1 className="text-2xl font-bold mb-7 border-b-2 pb-3 border-slate-600">
-      My Patients
-    </h1>
-
-    <div className="grid gap-6 max-[545px]:grid-cols-1 max-sm:grid-cols-2 sm:max-[900px]:grid-cols-1 sm:max-xl:grid-cols-2 xl:max-2xl:grid-cols-3 2xl:grid-cols-3">
-      {appointments.map((appointment) => (
-        <AppointmentCard key={appointment.id} appointment={appointment} />
-      ))}
     </div>
   </div>
 );
