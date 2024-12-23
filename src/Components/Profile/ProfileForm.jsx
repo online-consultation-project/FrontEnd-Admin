@@ -36,36 +36,11 @@ const initialState = {
 };
 
 
-const getIdByData = async (_id,setAdminData) => {
-  const authtoken = localStorage.getItem("token");
-
-
-  try {
-    await axios
-      .get(`http://localhost:7000/admin/getprofile?_id=${_id}`, {
-        headers: {
-          Authorization: `Bearer ${authtoken}`,
-        },
-      })
-      .then((res) => {
-        setAdminData(res.data);
-      
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
-
-
-
 
 const AdminInfoForm = () => {
   const [adminData, setAdminData] = useState(initialState);
+  console.log(setAdminData);
+  
 
   const { _id } = useParams();
   const navigate = useNavigate();
@@ -125,9 +100,30 @@ console.log(data);
     }
   };
 
+  const getIdByData = async (_id) => {
+    const authtoken = localStorage.getItem("token");
+    try {
+      await axios
+        .get(`http://localhost:7000/admin/getprofile?_id=${_id}`, {
+          headers: {
+            Authorization: `Bearer ${authtoken}`,
+          },
+        })
+        .then((res) => {
+          setAdminData(res.data);
+        
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   useEffect(() => {
-      getIdByData(_id,setAdminData);
+      getIdByData(_id);
   },[]);
 
   return (
