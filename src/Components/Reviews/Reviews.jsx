@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IoStar, IoStarHalf } from "react-icons/io5";
+import Loader from "../ReusableComp/Loader";
 
 const ReviewSection = () => {
   const [getReviews, setGetReviews] = useState([]);
@@ -26,9 +27,9 @@ const ReviewSection = () => {
 
   if (Loading) {
     return (
-      <p className=" w-full text-center flex justify-center items-center h-[400px] font-semibold ">
-        Loading reviews...
-      </p>
+      <div className=" w-full text-center flex justify-center items-center font-semibold ">
+       <Loader/>
+      </div>
     );
   }
   if (error) {

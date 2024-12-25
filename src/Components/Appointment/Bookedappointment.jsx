@@ -108,12 +108,14 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import AppointmentCard from "./AppointMap"; // Ensure this matches your component's file name
 import { toast } from "react-toastify";
+import Loader from "../ReusableComp/Loader";
 
 const apiUrl = "http://localhost:7000"; // Ensure your backend is running on this port
 
 const AppointmentList = () => {
   const { doctorId } = useParams(); // Get doctorId from route parameters
   const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(false); // Loader state
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -121,6 +123,8 @@ const AppointmentList = () => {
         toast.error("Doctor ID is missing");
         return;
       }
+
+      setLoading(true);
 
       try {
         const response = await axios.get(
@@ -133,11 +137,12 @@ const AppointmentList = () => {
         );
 
         setAppointments(response.data.appointments || []);
-        toast.success(response.data.message || "Appointments fetched successfully");
       } catch (error) {
         toast.error(
           error.response?.data?.message || "Error fetching appointments"
         );
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -200,7 +205,11 @@ const AppointmentList = () => {
 
   return (
     <div className="container mx-auto mb-4">
-      {appointments.length > 0 ? (
+      {loading ? (
+        <div className="text-center text-gray-600">
+       <Loader/>
+        </div>
+      ) : appointments.length > 0 ? (
         appointments.map((appointment) => (
           <AppointmentCard
             key={appointment._id} // Use _id as the key
@@ -216,7 +225,7 @@ const AppointmentList = () => {
               phone: appointment.patientPhone,
               type: appointment.slot,
               status: appointment.status,
-              patientConsult:appointment.patientConsult,
+              patientConsult: appointment.patientConsult,
               gender: appointment.patientGender,
               age: appointment.patientAge,
             }}
@@ -232,4 +241,5 @@ const AppointmentList = () => {
 };
 
 export default AppointmentList;
+
 

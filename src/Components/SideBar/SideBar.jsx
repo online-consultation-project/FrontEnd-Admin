@@ -10,6 +10,7 @@ import { RiContactsFill } from "react-icons/ri";
 import Logo from "../../images/CureConnect.png";
 import HeaderMain from "../Header/Header";
 import { BiLogOut, BiSolidLogOut } from "react-icons/bi";
+import { GoReport } from "react-icons/go";
 
 const adminId = localStorage.getItem("adminId")
 
@@ -21,6 +22,7 @@ const navItems = [
   { icon: MdPreview, text: "Reviews", path: "/admin/reviews" },
   { icon: FaUserEdit, text: "Profile Settings", path: "/admin/profile" },
   { icon: FaKey, text: "Change Password", path: "/admin/changepassword" },
+  { icon: GoReport , text: "Report ", path: "/admin/report" },
   
 ];
 

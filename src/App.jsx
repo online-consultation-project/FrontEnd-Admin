@@ -17,6 +17,7 @@ import PrivateRoute from "./Components/auth/private";
 import ResetPassword from "./Components/auth/ForgotPassword";
 import UpdateProfile from "./Components/Profile/updateProfile";
 import AppointmentList from "./Components/Appointment/Bookedappointment";
+import Report from "./Components/Settings/Report/Report";
 
 const RouteComp = () => {
   return (
@@ -42,6 +43,7 @@ const RouteComp = () => {
           <Route
             path="availabletimimgs/updateslots/:doctor_id" element={<Slots />}
           />
+          <Route path="report" element={<Report/>} />
           <Route path="changepassword" element={<ChangePassword />} />
           <Route path="logout" element={<Logout />} />
         </Route>

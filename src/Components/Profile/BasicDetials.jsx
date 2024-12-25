@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 import AdminInfoForm from "./ProfileForm";
+import Loader from "../ReusableComp/Loader";
 
 const BasicDetails = () => {
   const [profileData, setProfileData] = useState({});
+  const [loading, setLoading] = useState(true); // State to manage loading
 
   const authtoken = localStorage.getItem("token");
-
   const AdminId = localStorage.getItem("adminId");
 
   useEffect(() => {
@@ -27,13 +28,21 @@ const BasicDetails = () => {
         }
       } catch (error) {
         console.error("Error fetching profile data:", error);
+      } finally {
+        setLoading(false); // Stop loading once the data is fetched or an error occurs
       }
     };
 
     if (AdminId) {
       fetchData();
+    } else {
+      setLoading(false); // Stop loading if AdminId is not available
     }
   }, [AdminId]);
+
+  if (loading) {
+    return <Loader />; // Render the loader while loading
+  }
 
   return (
     <div className="min-h-[300px]">

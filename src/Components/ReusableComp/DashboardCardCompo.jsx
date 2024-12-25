@@ -1,6 +1,6 @@
 import React from "react";
 
-const DashboardCard = ({ props }) => {
+const DashboardCardComp = ({ props }) => {
   const { img: Img, title, count, date, color } = props || {};
 
   //    console.log(Img);
@@ -25,4 +25,4 @@ const DashboardCard = ({ props }) => {
   );
 };
 
-export default DashboardCard;
+export default DashboardCardComp;

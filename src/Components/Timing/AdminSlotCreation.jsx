@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import { toast } from "react-toastify";
+import Loader from "../ReusableComp/Loader";
 
 const urlApi = "http://localhost:7000";
 const token = localStorage.getItem("token");
@@ -14,13 +15,14 @@ const SlotGenerator = () => {
   const [slots, setSlots] = useState([]);
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [existingSlots, setExistingSlots] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchSlots();
   }, [date]);
 
   const fetchSlots = async () => {
-
+    setLoading(true); 
     try {
       const response = await axios.get(
         `${urlApi}/api/slots/${doctorId}?date=${date}`,
@@ -31,6 +33,8 @@ const SlotGenerator = () => {
       setExistingSlots(response.data.slots || []);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching
     }
   };
 
@@ -72,6 +76,7 @@ const SlotGenerator = () => {
   };
 
   const saveSlots = async () => {
+    setLoading(true); 
     try {
       await axios.post(
         `${urlApi}/api/slots`,
@@ -85,10 +90,13 @@ const SlotGenerator = () => {
         error.response?.data?.message ||
           "Failed to save slots. Please try again."
       );
+    } finally {
+      setLoading(false); 
     }
   };
 
   const updateSlots = async () => {
+    setLoading(true); 
     try {
       await axios.put(
         `${urlApi}/api/slots/${doctorId}`,
@@ -102,8 +110,14 @@ const SlotGenerator = () => {
         error.response?.data?.message ||
           "Failed to update slots. Please try again."
       );
+    } finally {
+      setLoading(false); 
     }
   };
+
+  if (loading) {
+    return <Loader/>; 
+  }
 
   return (
     <div className="p-6 max-w-md mx-auto bg-white rounded-lg shadow-md">
@@ -234,6 +248,5 @@ const SlotGenerator = () => {
     </div>
   );
 };
-
 
 export default SlotGenerator;
