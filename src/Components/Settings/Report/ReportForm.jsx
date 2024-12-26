@@ -58,12 +58,14 @@ const ReportMessage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:7000/admin/report", {
+      const payload = {
         subject,
         issue,
         detailedProblem,
-        doctorId: localStorage.getItem("adminId"),
-      });
+        
+      };
+
+      const response = await axios.post("http://localhost:7000/admin/report", payload);
 
       if (response.status === 200) {
         toast.success("Report sent successfully!");
@@ -86,20 +88,31 @@ const ReportMessage = () => {
       container
       justifyContent="center"
       alignItems="center"
-      style={{ minHeight: "100vh", backgroundColor: "#f4f6f8" }}
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#f4f6f8",
+        padding: "1rem",
+      }}
     >
       <Grid item xs={12} sm={10} md={8} lg={6}>
-        <Paper elevation={3} style={{ padding: "2rem" }}>
+        <Paper
+          elevation={3}
+          style={{
+            padding: "2rem",
+            borderRadius: "8px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          }}
+        >
           <Typography
             variant="h4"
             align="center"
             gutterBottom
-            style={{ color: "#1565c0", marginBottom: "1rem" }}
+            style={{ color: "#1565c0", marginBottom: "1rem", fontWeight: 600 }}
           >
             Report Your Issues
           </Typography>
           <form onSubmit={handleSubmit}>
-            <Grid container spacing={4}>
+            <Grid container spacing={3}>
               {/* Subject Field */}
               <Grid item xs={12}>
                 <TextField
@@ -111,8 +124,8 @@ const ReportMessage = () => {
                   variant="outlined"
                   placeholder="Enter subject"
                   required
-                  InputProps={{ style: { fontSize: "1.2rem" } }}
-                  InputLabelProps={{ style: { fontSize: "1.2rem" } }}
+                  InputProps={{ style: { fontSize: "1rem" } }}
+                  InputLabelProps={{ style: { fontSize: "1rem" } }}
                 />
               </Grid>
 
@@ -127,8 +140,8 @@ const ReportMessage = () => {
                   fullWidth
                   variant="outlined"
                   required
-                  InputProps={{ style: { fontSize: "1.2rem" } }}
-                  InputLabelProps={{ style: { fontSize: "1.2rem" } }}
+                  InputProps={{ style: { fontSize: "1rem" } }}
+                  InputLabelProps={{ style: { fontSize: "1rem" } }}
                 >
                   <MenuItem value="">
                     <em>-- Select an Issue --</em>
@@ -154,8 +167,8 @@ const ReportMessage = () => {
                   variant="outlined"
                   placeholder="Describe the problem in detail"
                   required
-                  InputProps={{ style: { fontSize: "1.2rem" } }}
-                  InputLabelProps={{ style: { fontSize: "1.2rem" } }}
+                  InputProps={{ style: { fontSize: "1rem" } }}
+                  InputLabelProps={{ style: { fontSize: "1rem" } }}
                 />
               </Grid>
 
@@ -168,8 +181,9 @@ const ReportMessage = () => {
                   style={{
                     backgroundColor: "#1565c0",
                     color: "white",
-                    fontSize: "1.2rem",
-                    padding: "1rem",
+                    fontSize: "1rem",
+                    padding: "0.75rem",
+                    borderRadius: "6px",
                   }}
                 >
                   Send Report

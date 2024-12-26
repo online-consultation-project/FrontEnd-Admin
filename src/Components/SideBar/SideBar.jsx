@@ -17,7 +17,7 @@ const adminId = localStorage.getItem("adminId")
 const navItems = [
   { icon: LuLayoutDashboard, text: "Dashboard", path: "/admin" },
   { icon: FaStethoscope, text: "Appointments", path: `/admin/appointments/${adminId}` },
-  { icon: RiContactsFill, text: "My Patients", path: "/admin/patients/:doctorId" },
+  { icon: RiContactsFill, text: "My Patients", path: "/admin/patients" },
   { icon: IoMdTimer, text: "Available Timings", path: "/admin/availabletimimgs" },
   { icon: MdPreview, text: "Reviews", path: "/admin/reviews" },
   { icon: FaUserEdit, text: "Profile Settings", path: "/admin/profile" },

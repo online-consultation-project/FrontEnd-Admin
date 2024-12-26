@@ -37,7 +37,7 @@ const RouteComp = () => {
             <Route path="update/:_id" element={<UpdateProfile />} />
           </Route>
 
-          <Route path="patients/:doctorId" element={<MyPatients />} />
+          <Route path="patients" element={<MyPatients />} />
           <Route path="reviews" element={<AdminReview />} />
           <Route path="availabletimimgs" element={<Slots />} />
           <Route
