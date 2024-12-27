@@ -423,7 +423,7 @@ const DashBoardMain = () => {
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Patient Distribution
           </h2>
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" className="p-6">
             <PieChart>
               <Pie
                 data={[
@@ -435,6 +435,7 @@ const DashBoardMain = () => {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
+                innerRadius="40%"
                 outerRadius="80%"
                 fill="#8884d8"
                 label
@@ -454,27 +455,8 @@ const DashBoardMain = () => {
 
         {/* Daily Revenue - BarChart */}
         <div className="bg-white w-full h-[500px] rounded-lg p-6 shadow-md shadow-slate-300">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Daily Revenue</h2>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={revenuePerDay}
-              margin={{ top: 5, right: 30, left: 5, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="totalRevenue" fill="#fb923c" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Weekly Revenue - LineChart */}
-      <div className="mt-8 bg-white w-full h-[400px] rounded-lg p-6 shadow-md shadow-slate-300">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Revenue Per Week</h2>
-        <ResponsiveContainer width="100%" height="100%">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">Revenue Per Week</h2>
+          <ResponsiveContainer width="100%" height="100%" className="p-6">
           <LineChart data={revenuePerWeek}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="day" />
@@ -484,6 +466,8 @@ const DashBoardMain = () => {
             <Line type="monotone" dataKey="totalRevenue" stroke="#a78bfa" fill="#a78bfa" />
           </LineChart>
         </ResponsiveContainer>
+
+        </div>
       </div>
     </div>
   );

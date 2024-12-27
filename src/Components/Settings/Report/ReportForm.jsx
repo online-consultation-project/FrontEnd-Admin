@@ -64,8 +64,13 @@ const ReportMessage = () => {
         detailedProblem,
         
       };
+      const authToken = localStorage.getItem("token");
 
-      const response = await axios.post("http://localhost:7000/admin/report", payload);
+      const response = await axios.post("http://localhost:7000/admin/report", payload,
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
+      );
 
       if (response.status === 200) {
         toast.success("Report sent successfully!");
