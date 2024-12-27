@@ -102,13 +102,12 @@
 // };
 
 // export default AppointmentList;
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import AppointmentCard from "./AppointMap"; // Ensure this matches your component's file name
 import { toast } from "react-toastify";
-import Loader from "../ReusableComp/Loader";
+import Loader from "../ReusableComp/Loader"; // Import the Loader component
 
 const apiUrl = "http://localhost:7000"; // Ensure your backend is running on this port
 
@@ -207,7 +206,7 @@ const AppointmentList = () => {
     <div className="container mx-auto mb-4">
       {loading ? (
         <div className="text-center text-gray-600">
-       <Loader/>
+          <Loader /> {/* Display Loader */}
         </div>
       ) : appointments.length > 0 ? (
         appointments.map((appointment) => (
@@ -241,5 +240,3 @@ const AppointmentList = () => {
 };
 
 export default AppointmentList;
-
-
