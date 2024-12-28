@@ -18,6 +18,7 @@ import ResetPassword from "./Components/auth/ForgotPassword";
 import UpdateProfile from "./Components/Profile/updateProfile";
 import AppointmentList from "./Components/Appointment/Bookedappointment";
 import Report from "./Components/Settings/Report/Report";
+import AppointmentDetails from "./Components/Appointment/Appointment";
 
 const RouteComp = () => {
   return (
@@ -28,7 +29,12 @@ const RouteComp = () => {
         <Route path="/admin" element={<HomeSection />}>
           <Route index element={<DashBoardMain />} />
 
-            <Route path="appointments/:doctorId" element={<AppointmentList />} />
+            <Route path="appointments/:doctorId" element={<AppointmentDetails />} >
+              <Route index element={<AppointmentList />} />
+              <Route path="onlineappointment" element={<OnlineAppointment />} />
+            </Route>
+
+
             {/* <Route path="appointments/:appointmentId" element={<AppointmentList />} /> */}
             
 
