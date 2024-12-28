@@ -10,12 +10,12 @@ const pharmacyMenu = [
   {
     image: <FaAddressCard className="text-2xl font-semibold" />,
     title: "Offline Appoitnment",
-    path: `/admin/appointments/${docId}`,
+    path: `/admin/appointments`,
   },
   {
     image: <FaUserDoctor className="text-2xl font-semibold" />,
     title: "Online Appointment",
-    path: `/admin/appointments/${docId}/onlineappointment`,
+    path: `/admin/appointments/onlineappointment`,
   },
 ];
 

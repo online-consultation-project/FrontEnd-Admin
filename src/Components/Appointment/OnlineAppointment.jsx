@@ -14,16 +14,16 @@ const OnlineAppointment = () => {
 
   useEffect(() => {
     const fetchAppointments = async () => {
-      if (!doctorId) {
-        toast.error("Doctor ID is missing");
-        return;
-      }
+      // if (!doctorId) {
+      //   toast.error("Doctor ID is missing");
+      //   return;
+      // }
 
       setLoading(true);
 
       try {
         const response = await axios.get(
-          `${apiUrl}/api/zoommetting/bydoctor/${doctorId}`,
+          `${apiUrl}/api/zoommetting/bydoctor`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

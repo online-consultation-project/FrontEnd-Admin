@@ -29,7 +29,7 @@ const RouteComp = () => {
         <Route path="/admin" element={<HomeSection />}>
           <Route index element={<DashBoardMain />} />
 
-            <Route path="appointments/:doctorId" element={<AppointmentDetails />} >
+            <Route path="appointments" element={<AppointmentDetails />} >
               <Route index element={<AppointmentList />} />
               <Route path="onlineappointment" element={<OnlineAppointment />} />
             </Route>
