@@ -6,7 +6,7 @@ import Loader from "../ReusableComp/Loader";
 
 const urlApi = "http://localhost:7000";
 const token = localStorage.getItem("token");
-const doctorId = localStorage.getItem("adminId")
+// const doctorId = localStorage.getItem("adminId")
 
 const SlotGenerator = () => {
   const [startTime, setStartTime] = useState("10:00 AM");
@@ -25,7 +25,7 @@ const SlotGenerator = () => {
     setLoading(true); 
     try {
       const response = await axios.get(
-        `${urlApi}/api/slots/${doctorId}?date=${date}`,
+        `${urlApi}/api/slots/?date=${date}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -34,7 +34,7 @@ const SlotGenerator = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false); // Set loading to false after fetching
+      setLoading(false); 
     }
   };
 
@@ -80,7 +80,7 @@ const SlotGenerator = () => {
     try {
       await axios.post(
         `${urlApi}/api/slots`,
-        { doctorId, date, slots },
+        {  date, slots },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success("Slots saved successfully.");
@@ -99,7 +99,7 @@ const SlotGenerator = () => {
     setLoading(true); 
     try {
       await axios.put(
-        `${urlApi}/api/slots/${doctorId}`,
+        `${urlApi}/api/slots`,
         { date, slots },
         { headers: { Authorization: `Bearer ${token}` } }
       );

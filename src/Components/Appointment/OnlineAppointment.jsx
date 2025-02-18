@@ -14,12 +14,7 @@ const OnlineAppointment = () => {
 
   useEffect(() => {
     const fetchAppointments = async () => {
-      // if (!doctorId) {
-      //   toast.error("Doctor ID is missing");
-      //   return;
-      // }
-
-      setLoading(true);
+          setLoading(true);
 
       try {
         const response = await axios.get(
