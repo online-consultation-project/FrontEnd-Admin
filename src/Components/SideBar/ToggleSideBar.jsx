@@ -5,13 +5,17 @@ import { RiContactsFill } from "react-icons/ri";
 import { IoMdTimer } from "react-icons/io";
 import { MdPreview } from "react-icons/md";
 import { Link } from "react-router-dom";
-import Logo from "../../images/CureConnect.png"; // Path to your logo
+import Logo from "../../images/CureConnect.png"; 
 
 const navItems = [
   { icon: LuLayoutDashboard, text: "Dashboard", path: "/admin" },
   { icon: FaStethoscope, text: "Appointments", path: "/admin/appointments" },
   { icon: RiContactsFill, text: "My Patients", path: "/admin/patients" },
-  { icon: IoMdTimer, text: "Available Timings", path: "/admin/availabletimimgs" },
+  {
+    icon: IoMdTimer,
+    text: "Available Timings",
+    path: "/admin/availabletimimgs",
+  },
   { icon: MdPreview, text: "Reviews", path: "/admin/reviews" },
   { icon: FaUserEdit, text: "Profile Settings", path: "/admin/profile" },
   { icon: FaKey, text: "Change Password", path: "/admin/changepassword" },
@@ -20,16 +24,14 @@ const navItems = [
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <div
-      className={`fixed top-0 left-0 h-full w-64 bg-blue-950 shadow-lg z-50 transform ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } transition-transform duration-300`}
+      className={`fixed block top-0 left-0  bg-blue-950 shadow-lg z-50 transform transition-all duration-300 ${
+        isOpen
+          ? "translate-x-0 opacity-100 pointer-events-auto h-full w-64"
+          : "-translate-x-full opacity-0 pointer-events-none"
+      }`}
     >
-     
       <div className="flex justify-end px-4 pt-4">
-        <button
-          onClick={toggleSidebar}
-          className="text-gray-400 text-2xl"
-        >
+        <button onClick={toggleSidebar} className="text-gray-400 text-2xl">
           &times;
         </button>
       </div>
